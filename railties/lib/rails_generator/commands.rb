@@ -299,6 +299,7 @@ HELP
             # Evaluate any assignments in a temporary, throwaway binding.
             vars = template_options[:assigns] || {}
             b = template_options[:binding] || binding
+            b.local_variable_set :vars, vars if b.respond_to?(:local_variable_set)
             vars.each { |k,v| eval "#{k} = vars[:#{k}] || vars['#{k}']", b }
 
             # Render the source file with the temporary binding.
